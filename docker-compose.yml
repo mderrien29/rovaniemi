@@ -15,6 +15,8 @@ services:
       - backend
     ports: 
       - "9000:80"
+    environment:
+      ROVANIEMI_BACKEND: backend:3000
 
   backend:
     restart: always
@@ -24,3 +26,24 @@ services:
       target: production-stage
     ports: 
       - "9001:3000"
+    environment:
+      ROVANIEMI_DB_HOST: db:3306
+      ROVANIEMI_DB_NAME: rovaniemi
+      ROVANIEMI_DB_USER: root
+      ROVANIEMI_DB_PASSWORD: '2#q#eMzTXXSMZ9F5'
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'rovaniemi'
+      MYSQL_ROOT_PASSWORD: '2#q#eMzTXXSMZ9F5'
+    ports:
+      - "9002:3306"
+    expose:
+      - "3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+    db-data: {}
