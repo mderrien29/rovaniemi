@@ -30,20 +30,27 @@ services:
       ROVANIEMI_DB_HOST: db:3306
       ROVANIEMI_DB_NAME: rovaniemi
       ROVANIEMI_DB_USER: root
-      ROVANIEMI_DB_PASSWORD: '2#q#eMzTXXSMZ9F5'
+      ROVANIEMI_DB_PASSWORD: root
 
   db:
-    image: mysql:5.7
+    image: mariadb
     restart: always
     environment:
       MYSQL_DATABASE: 'rovaniemi'
-      MYSQL_ROOT_PASSWORD: '2#q#eMzTXXSMZ9F5'
+      MYSQL_ROOT_PASSWORD: 'root'
     ports:
-      - "9002:3306"
+      - "3306:3306"
     expose:
       - "3306"
     volumes:
-      - db-data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
 
-volumes:
-    db-data: {}
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - '8080:80'
