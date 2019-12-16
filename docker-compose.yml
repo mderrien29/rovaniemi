@@ -1,0 +1,30 @@
+version: "3.4"
+
+networks:
+  reverse-proxy:
+    external:
+      name: reverse-proxy
+
+services: 
+  frontend:
+    restart: always
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+      target: production-stage
+    networks:
+      - reverse-proxy
+    expose: 
+      - "80"
+
+  backend:
+    restart: always
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+      target: production-stage
+    expose:
+      - "3000"
+    networks:
+      - reverse-proxy
+      
