@@ -1,9 +1,8 @@
 version: "3.4"
 
 networks:
-  reverse-proxy:
-    external:
-      name: reverse-proxy
+  default:
+    driver: bridge
 
 services: 
   frontend:
@@ -12,10 +11,10 @@ services:
       context: ./front
       dockerfile: Dockerfile
       target: production-stage
-    networks:
-      - reverse-proxy
-    expose: 
-      - "80"
+    links: 
+      - backend
+    ports: 
+      - "9000:80"
 
   backend:
     restart: always
@@ -23,8 +22,5 @@ services:
       context: ./back
       dockerfile: Dockerfile
       target: production-stage
-    expose:
-      - "3000"
-    networks:
-      - reverse-proxy
-      
+    ports: 
+      - "9001:3000"

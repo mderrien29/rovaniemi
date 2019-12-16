@@ -1,14 +1,24 @@
 # build stage
 FROM node:lts-alpine as build-stage
+
 WORKDIR /app
+
 COPY package*.json ./
-RUN npm install
+RUN npm i
+
 COPY . .
 RUN npm run build
 
 # production stage
 FROM node:lts-alpine as production-stage
-COPY --from=build-stage /app/dist /app
+
+WORKDIR /app
+
+COPY --from=build-stage /app/dist .
+COPY --from=build-stage /app/package.json .
+
+RUN npm i
+
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+CMD ["node", "main.js"]
 
