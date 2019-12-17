@@ -9,8 +9,7 @@ services:
     restart: always
     build:
       context: ./front
-      dockerfile: Dockerfile
-      target: production-stage
+      dockerfile: Dockerfile-dev
     links: 
       - backend
     ports: 
@@ -22,8 +21,7 @@ services:
     restart: always
     build:
       context: ./back
-      dockerfile: Dockerfile
-      target: production-stage
+      dockerfile: Dockerfile-dev
     ports: 
       - "9001:3000"
     environment:
@@ -47,3 +45,13 @@ services:
       - "3306"
     volumes:
       - ./db:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - '8080:80'

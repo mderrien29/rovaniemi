@@ -1,0 +1,10 @@
+# build stage
+FROM node:lts-alpine as build-stage
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm i
+
+COPY . .
+RUN npm run start:dev

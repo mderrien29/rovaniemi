@@ -17,7 +17,7 @@ WORKDIR /app
 COPY --from=build-stage /app/dist .
 COPY --from=build-stage /app/package.json .
 
-RUN npm i
+RUN npm i --production
 
 EXPOSE 3000
 CMD ["node", "main.js"]
