@@ -1,4 +1,4 @@
-import { Controller, Request, Post, Get, UseGuards } from '@nestjs/common';
+import { Controller, Request, Post, Get, Param, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
 import { AppService } from './app.service';
@@ -18,6 +18,31 @@ export class AppController {
   @UseGuards(AuthGuard('local'))
   @Post('auth/login')
   async login(@Request() req) {
-    return this.authService.login(req.user);
+    return await this.authService.login(req.user);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('me/battle')
+  async getBattle(@Request() req) {
+    return await this.appService.getBattle(req.user);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('battle/:id/all')
+  async getAll(@Request() req, @Param('id') battleId) {
+    return await this.appService.getAll(req.user, battleId);
+  }
+
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('battle/:id/categories')
+  async getCategories(@Request() req, @Param('id') battleId) {
+    return await this.appService.getCategories(battleId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('categories/:id/songs')
+  async getSongs(@Request() req, @Param('id') categoryId) {
+    return await this.appService.getSongs(req.user, categoryId);
   }
 }
