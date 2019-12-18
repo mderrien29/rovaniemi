@@ -1,4 +1,4 @@
-import { Controller, Request, Post, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Request, Post, Get, Param, UseGuards, Body } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
 import { AppService } from './app.service';
@@ -27,12 +27,11 @@ export class AppController {
     return await this.appService.getBattle(req.user);
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @Get('battle/:id/all')
-  async getAll(@Request() req, @Param('id') battleId) {
-    return await this.appService.getAll(req.user, battleId);
-  }
-
+  // @UseGuards(AuthGuard('jwt'))
+  // @Get('battle/:id/all')
+  // async getAll(@Request() req, @Param('id') battleId) {
+  //   return await this.appService.getAll(req.user, battleId);
+  // }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('battle/:id/categories')
@@ -44,5 +43,11 @@ export class AppController {
   @Get('categories/:id/songs')
   async getSongs(@Request() req, @Param('id') categoryId) {
     return await this.appService.getSongs(req.user, categoryId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('categories/:id/songs')
+  async addSongs(@Request() req, @Param('id') categoryId, @Body('url') songUrl) {
+    return await this.appService.addSongs(req.user, categoryId, songUrl);
   }
 }

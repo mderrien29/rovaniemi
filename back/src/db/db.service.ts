@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { createConnection } from 'mysql';
-import { DbUser } from '../app.model';
 
 @Injectable()
 export class DbService {
@@ -11,15 +10,23 @@ export class DbService {
   }
 
   static GET_BATTLE(userId): string {
-    return `SELECT b.* FROM USER_BATTLE as u_b, BATTLE AS b WHERE u_b.userId=${userId} AND b.id=u_b.battleId`;
+    return `SELECT b.id, b.name FROM USER_BATTLE as u_b, BATTLE AS b WHERE u_b.userId=${userId} AND b.id=u_b.battleId`;
   }
 
   static GET_CATEGORIES(battleId): string {
-    return `SELECT c.* FROM BATTLE as b, CATEGORY as c WHERE b.id=c.battleId AND b.id=${battleId}`;
+    return `SELECT c.id, c.name FROM BATTLE as b, CATEGORY as c WHERE b.id=c.battleId AND b.id=${battleId}`;
   }
 
   static GET_SONGS(categoryId): string {
-    return `SELECT s.* FROM CATEGORY as c, SONG as s WHERE b.id=s.category.id AND c.id=${categoryId}`;
+    return `SELECT s.id, s.url, u.name, s.userId FROM USER as u, CATEGORY as c, SONG as s WHERE c.id=s.categoryId AND c.id=${categoryId} AND u.id=s.userId`;
+  }
+
+  static GET_ALL(userId, battleId): string {
+    return `SELECT * FROM BATTLE as b, CATEGORY as c, SONG as s WHERE b.id=${battleId} AND c.battleId=b.id AND c.id=s.categoryId`; // tslint:disable-line
+  }
+
+  static INSERT_SONG(userId, categoryId, songUrl): string {
+    return `INSERT INTO SONG (id, userId, categoryId, url) VALUES (NULL, '${userId}', '${categoryId}', '${songUrl}')`;
   }
 
   constructor() {
@@ -38,6 +45,8 @@ export class DbService {
           console.log(err);
           resolve(undefined);
         }
+
+        console.log(res);
         resolve(res);
       });
     });

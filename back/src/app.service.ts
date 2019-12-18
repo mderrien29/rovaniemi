@@ -3,17 +3,18 @@ import { DbService } from './db/db.service';
 
 @Injectable()
 export class AppService {
-  constructor(
-    private readonly dbService: DbService
-  ) {}
+  constructor(private readonly dbService: DbService) {}
 
   getHello(): string {
     return 'rovaniemi backend';
   }
 
   async getAll(user, battleId): Promise<any> {
-    //todo
-    return new Promise(() => []);
+    const results = await this.dbService.query(
+      DbService.GET_ALL(user.id, battleId),
+    );
+
+    return results;
   }
 
   async getBattle(user): Promise<any> {
@@ -25,10 +26,24 @@ export class AppService {
   }
 
   async getSongs(user, categoryId): Promise<any> {
-    const songs = await this.dbService.query(DbService.GET_SONGS(categoryId));
+    let songs = await this.dbService.query(DbService.GET_SONGS(categoryId));
+    console.log(songs)
 
+    songs = this.hideSongs(user, songs);
+    console.log(songs)
+
+    return songs;
+  }
+
+  async addSongs(user, categoryId, songUrl): Promise<any> {
+    return await this.dbService.query(
+      DbService.INSERT_SONG(user.id, categoryId, songUrl),
+    );
+  }
+
+  private hideSongs(user, songs): any[] {
     songs.forEach(song => {
-      if (song.userId !== user) {
+      if (song.userId !== user.id) {
         song.url = '';
       }
     });
