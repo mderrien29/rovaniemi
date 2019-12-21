@@ -36,6 +36,10 @@ export class AppService {
   }
 
   async addSongs(user, categoryId, songUrl): Promise<any> {
+    await this.dbService.query(
+      DbService.DELETE_SONG(user.id, categoryId)
+    );
+
     return await this.dbService.query(
       DbService.INSERT_SONG(user.id, categoryId, songUrl),
     );

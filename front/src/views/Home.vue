@@ -1,5 +1,5 @@
 <template>
-  <div v-if="category" class="home">
+  <div v-if="category" class="home" :key="category.id">
     <h1>{{category.name}}</h1>
     <hr/>
     <div id="addYourSong">
@@ -33,9 +33,11 @@
       },
     },
     methods: {
-      submit(e){
-        this.$store.dispatch('addSong', {categoryId: this.category.id, url: e.target.value});
+      async submit(e){
+        await this.$store.dispatch('addSong', {categoryId: this.category.id, url: e.target.value});
         this.$store.dispatch('getBattles');
+        e.target.value = '';
+        setTimeout(Location.reload, 3000);
       } 
     }
   };

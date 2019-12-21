@@ -25,6 +25,7 @@
     created() {
       this.$store.subscribe((mutation, state) => {
         if(mutation.type === 'loadCategories'){
+          console.log('updating sidebar')
           this.$forceUpdate();
         }
       }) 

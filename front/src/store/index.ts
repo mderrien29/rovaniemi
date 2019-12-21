@@ -1,14 +1,20 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {getToken, getBattles, getCategories, getSongs, addSong} from './request';
+import VuexPersist from 'vuex-persist';
 
 Vue.use(Vuex);
+const vuexPersist = new VuexPersist({
+  key: 'rovaniemi',
+  storage: window.sessionStorage
+});
 
 interface User {
   username?: string;
 }
 
 export default new Vuex.Store({
+  plugins: [vuexPersist.plugin],
   state: {
     status: '',
     username: '',
@@ -17,7 +23,7 @@ export default new Vuex.Store({
     selectedCategoryId: 0,
   },
   mutations: {
-    auth_success(state, {token, user}) {
+    auth_success(state: any, {token, user}) {
       state.status = 'success';
       state.username = user.username;
       state.token = token;
@@ -39,8 +45,7 @@ export default new Vuex.Store({
       battles.find((battle:any) => battle.id == battleId)
         .categories.find( (category: any) => category.id === categoryId).songs = songs;
       state.battles = battles;
-
-      console.log(state.battles);
+      console.log(state.battles)
     },
     selectCategory(state, id: number){
       state.selectedCategoryId = id;
@@ -64,7 +69,7 @@ export default new Vuex.Store({
       }
     },
     async getBattles({commit}) {
-      if(this.getters.battles.length > 0) return;
+      console.log("getting data...")
 
       try {
         const battles = await getBattles(this.getters.token);
@@ -85,7 +90,6 @@ export default new Vuex.Store({
       }
     },
     async addSong({commit}, {categoryId, url}){
-      console.log('addsong')
       return addSong(this.getters.token, categoryId, url);
     }
   },

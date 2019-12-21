@@ -29,6 +29,10 @@ export class DbService {
     return `INSERT INTO SONG (id, userId, categoryId, url) VALUES (NULL, '${userId}', '${categoryId}', '${songUrl}')`;
   }
 
+  static DELETE_SONG(userId, categoryId): string {
+    return `DELETE FROM SONG WHERE EXISTS (SELECT * FROM SONG WHERE userId=${userId} AND categoryId=${categoryId}) AND userId='${userId}' AND categoryId='${categoryId}'`;
+  }
+
   constructor() {
     this.db = createConnection({
       host: process.env.ROVANIEMI_DB_HOST,
