@@ -1,10 +1,6 @@
 <template>
   <div id="nav">
-    <div v-if="isLoggedIn" id="connectionStatus">
-      connected as {{username}}
-      <button v-on:click="logout">Logout</button>
-    </div>
-  </div>
+      </div>
 </template>
 
 <script>
@@ -14,25 +10,18 @@
       isLoggedIn: function() {
         return this.$store.getters.isLoggedIn;
       },
-      username: function() {
-        return this.$store.getters.username;
-      },
-    },
+          },
     methods: {
-      logout: function() {
-        this.$store.dispatch('logout').then(() => {
-          this.$router.push('/login');
-        });
-      },
-    },
+          },
   };
 </script>
 
 <style scoped>
   #nav {
     width: 100%;
-    height: 100px;
+    height: 30px;
     background-color: lightgray;
+    border: solid black 1px;
   }
 
   #connectionStatus {

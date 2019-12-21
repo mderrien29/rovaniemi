@@ -30,8 +30,7 @@ export default {
       let password = this.password;
       this.$store
         .dispatch("login", { username, password })
-        .then(() => {
-          this.$store.dispatch("getBattles");
+        .then(() => { 
           this.$router.push("/")
         });
     }

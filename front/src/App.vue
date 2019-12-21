@@ -7,12 +7,10 @@
 </template>
 
 <script>
-  import Navbar from '@/components/Navbar.vue';
   import Sidebar from '@/components/Sidebar.vue';
 
   export default {
     components: {
-      Navbar,
       Sidebar,
     },
   };
@@ -26,10 +24,11 @@
     text-align: center;
     color: #2c3e50;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     margin: 0;
     padding: 0;
     overflow: hidden;
+    position: relative;
   }
 
   body {

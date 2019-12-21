@@ -1,21 +1,28 @@
 <template>
-  <div v-if="category" class="home" :key="category.id">
-    <h1>{{category.name}}</h1>
-    <hr/>
-    <div id="addYourSong">
-      <label>Ajouter votre chanson !</label>
-      <br/>
-      <input id="input" type="text" @keyup.enter="submit" />
+  <div v-if="category.id" class="home" :key="category.id">
+    <div id="title">
+      <h1>{{category.name}}</h1>
+      <HR/>
+      <div id="addYourSong">
+        <label>Ajoutez ou modifiez votre choix (lien youtube uniquement, appuyez sur entrée)</label>
+        <br/>
+        <input
+          id="input"
+          type="text"
+          @keyup.enter="submit"
+          placeholder="https://www.youtube.com/watch?v=yXQViqx6GMY"
+        />
+      </div>
     </div>
-    <hr/>
+    <HR/>
     <div v-for="song in category.songs" class="song">
       Added by {{song.name}}
-      <br/>
+      <br />
       <iframe
         :src="`https://youtube.com/embed/${song.url.substr(song.url.length - 11)}`"
       >
       </iframe>
-      <br/>
+      <br />
     </div>
   </div>
 </template>
@@ -27,30 +34,42 @@
     computed: {
       category: function() {
         const categoryId = this.$store.getters.selectCategory;
-        if(categoryId !== 0)
-        return this.$store.getters.battles[0].categories.find(
-          category => category.id == categoryId);
+        if (categoryId !== 0)
+          return this.$store.getters.battles[0].categories.find(
+            category => category.id == categoryId,
+          );
       },
     },
     methods: {
-      async submit(e){
-        await this.$store.dispatch('addSong', {categoryId: this.category.id, url: e.target.value});
-        this.$store.dispatch('getBattles');
+      async submit(e) {
+        await this.$store.dispatch('addSong', {
+          categoryId: this.category.id,
+          url: e.target.value,
+        });
+        await this.$store.dispatch('getBattles');
         e.target.value = '';
-        setTimeout(Location.reload, 3000);
-      } 
-    }
+        setTimeout(() => location.reload(), 3000);
+      },
+    },
+    created() {
+      this.$store.dispatch('getBattles');
+    },
   };
 </script>
 
 <style>
   .home {
-    float: right; 
-    width: 75vw;
+    float: right;
+    width: 79vw;
+  }
+  #title {
+    margin-bottom: 30px; 
   }
   iframe {
-    width: 80% !important; 
+    width: 80% !important;
     height: auto !important;
   }
+  input {
+    width: 80%;
+  }
 </style>
-
