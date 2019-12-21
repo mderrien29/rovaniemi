@@ -20,9 +20,6 @@ export const getBattles = async (token: string) => {
     uri: 'http://localhost:9001/me/battle',
     json: true,
   });
-
-  console.log(response);
-
   return response;
 };
 
@@ -37,9 +34,6 @@ export const getCategories = async (token: string, battle: number) => {
     uri: `http://localhost:9001/battle/${battle}/categories`,
     json: true,
   });
-
-  console.log(response);
-
   return response;
 };
 
@@ -54,8 +48,23 @@ export const getSongs = async (token: string, category: number) => {
     uri: `http://localhost:9001/categories/${category}/songs`,
     json: true,
   });
-
-  console.log(response);
-
   return response;
 };
+
+export const addSong = async (token: string, category: number, url: string) => {
+  const response = await rp.post({
+    headers: {
+      'User-Agent': 'client',
+    },
+    auth: {
+      'bearer': token,
+    },
+    uri: `http://localhost:9001/categories/${category}/songs`,
+    form: {url: url,},
+    json: true,
+  });
+
+  console.log(response);
+};
+
+

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {getToken, getBattles, getCategories, getSongs} from './request';
+import {getToken, getBattles, getCategories, getSongs, addSong} from './request';
 
 Vue.use(Vuex);
 
@@ -13,7 +13,8 @@ export default new Vuex.Store({
     status: '',
     username: '',
     token: localStorage.getItem('token') || '',
-    battles: [],
+    battles: [] as any,
+    selectedCategoryId: 0,
   },
   mutations: {
     auth_success(state, {token, user}) {
@@ -25,6 +26,25 @@ export default new Vuex.Store({
       state.status = '';
       state.token = '';
     },
+    loadBattle(state, battle: any) {
+      state.battles[0] = battle;
+    },
+    loadCategories(state, {battleId, categories}){
+      const battles = state.battles;
+      battles.find((battle:any) => battle.id == battleId).categories = categories;
+      state.battles = battles;
+    },
+    loadSongs(state, {battleId, categoryId, songs}){
+      const battles = state.battles;
+      battles.find((battle:any) => battle.id == battleId)
+        .categories.find( (category: any) => category.id === categoryId).songs = songs;
+      state.battles = battles;
+
+      console.log(state.battles);
+    },
+    selectCategory(state, id: number){
+      state.selectedCategoryId = id;
+    }
   },
   actions: {
     logout({commit}) {
@@ -44,19 +64,29 @@ export default new Vuex.Store({
       }
     },
     async getBattles({commit}) {
+      if(this.getters.battles.length > 0) return;
+
       try {
         const battles = await getBattles(this.getters.token);
-        battles.forEach( async (battle: {id: number, categories: []}) => {
-          battle.categories = await getCategories(this.getters.token, battle.id);
-          battle.categories.forEach( async (category: {id: number, songs: []}) => {
-            category.songs = await getSongs(this.getters.token, category.id);
+        commit('loadBattle', battles[0]); // only the first battle for now
+
+        battles.forEach( async (battle: any) => {
+          const categories = await getCategories(this.getters.token, battle.id);
+          commit('loadCategories', {battleId: battle.id, categories});
+
+          categories.forEach( async (category: any) => {
+            const songs = await getSongs(this.getters.token, category.id);
+            commit('loadSongs', {battleId: battle.id, categoryId: category.id, songs });
+
           });
         });
-
-        console.log(battles);
       } catch(err) {
         console.log(err);
       }
+    },
+    async addSong({commit}, {categoryId, url}){
+      console.log('addsong')
+      return addSong(this.getters.token, categoryId, url);
     }
   },
   getters: {
@@ -65,6 +95,7 @@ export default new Vuex.Store({
     authStatus: state => state.status,
     username: state => state.username,
     battles: state => state.battles,
+    selectCategory: state => state.selectedCategoryId,
   },
   modules: {},
 });

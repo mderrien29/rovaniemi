@@ -1,17 +1,54 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div v-if="category" class="home">
+    <h1>{{category.name}}</h1>
+    <hr/>
+    <div id="addYourSong">
+      <label>Ajouter votre chanson !</label>
+      <br/>
+      <input id="input" type="text" @keyup.enter="submit" />
+    </div>
+    <hr/>
+    <div v-for="song in category.songs" class="song">
+      Added by {{song.name}}
+      <br/>
+      <iframe
+        :src="`https://youtube.com/embed/${song.url.substr(song.url.length - 11)}`"
+      >
+      </iframe>
+      <br/>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-export default {
-  name: "home",
-  components: {
-    HelloWorld
-  }
-};
+  // @ is an alias to /src
+  export default {
+    name: 'home',
+    computed: {
+      category: function() {
+        const categoryId = this.$store.getters.selectCategory;
+        if(categoryId !== 0)
+        return this.$store.getters.battles[0].categories.find(
+          category => category.id == categoryId);
+      },
+    },
+    methods: {
+      submit(e){
+        this.$store.dispatch('addSong', {categoryId: this.category.id, url: e.target.value});
+        this.$store.dispatch('getBattles');
+      } 
+    }
+  };
 </script>
+
+<style>
+  .home {
+    float: right; 
+    width: 75vw;
+  }
+  iframe {
+    width: 80% !important; 
+    height: auto !important;
+  }
+</style>
+

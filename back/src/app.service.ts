@@ -43,7 +43,7 @@ export class AppService {
 
   private hideSongs(user, songs): any[] {
     songs.forEach(song => {
-      if (song.userId !== user.id) {
+      if (!user.isAdmin && song.userId !== user.id) {
         song.url = '';
       }
     });
