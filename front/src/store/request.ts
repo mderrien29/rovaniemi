@@ -1,8 +1,10 @@
 import * as rp from 'request-promise-native';
 
+const host = 'http://noel.mderrien.eu';
+
 export const getToken = async (username: string, password: string) => {
   const response = await rp.post({
-    uri: 'http://localhost:9001/auth/login',
+    uri: `${host}/auth/login`,
     form: {username: username, password: password},
     json: true,
   });
@@ -17,7 +19,7 @@ export const getBattles = async (token: string) => {
     auth: {
       'bearer': token,
     },
-    uri: 'http://localhost:9001/me/battle',
+    uri: `${host}/me/battle`,
     json: true,
   });
   return response;
@@ -31,7 +33,7 @@ export const getCategories = async (token: string, battle: number) => {
     auth: {
       'bearer': token,
     },
-    uri: `http://localhost:9001/battle/${battle}/categories`,
+    uri: `${host}/battle/${battle}/categories`,
     json: true,
   });
   return response;
@@ -45,7 +47,7 @@ export const getSongs = async (token: string, category: number) => {
     auth: {
       'bearer': token,
     },
-    uri: `http://localhost:9001/categories/${category}/songs`,
+    uri: `${host}/categories/${category}/songs`,
     json: true,
   });
   return response;
@@ -59,7 +61,7 @@ export const addSong = async (token: string, category: number, url: string) => {
     auth: {
       'bearer': token,
     },
-    uri: `http://localhost:9001/categories/${category}/songs`,
+    uri: `${host}/categories/${category}/songs`,
     form: {url: url,},
     json: true,
   });
