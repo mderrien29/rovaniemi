@@ -57,7 +57,7 @@
     float: left;
     box-sizing: border-box;
     padding: 10px;
-    background-color: lightblue;
+    background-color: lightgray;
   }
 
   .catButton {
@@ -73,8 +73,8 @@
 
   .catButton:hover {
     color: #ffffff !important;
-    background: #03c2fc;
-    border-color: #03c2fc !important;
+    background: black;
+    border-color: lightslategray !important;
     transition: all 0.4s ease 0s;
   }
 </style>

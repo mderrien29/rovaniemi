@@ -1,5 +1,6 @@
 <template>
   <div v-if="category.id" class="home" :key="category.id">
+
     <div id="title">
       <h1>{{category.name}}</h1>
       <hr />
@@ -17,6 +18,7 @@
         />
       </div>
     </div>
+
     <hr />
     <div class="songs">
       <div v-for="song in category.songs" class="song">
@@ -29,6 +31,7 @@
         <br />
       </div>
     </div>
+
   </div>
 </template>
 
@@ -65,13 +68,20 @@
 <style>
   .home {
     float: right;
+    height: 100vh;
     width: 80%;
   }
   .songs {
     overflow-y: scroll; 
+    height:80%;
+  }
+  .song {
+    margin-top: 20px;
+    margin-bottom: 20px; 
   }
   #title {
     margin-bottom: 30px;
+    height: 15%;
   }
   iframe {
     width: 80% !important;
