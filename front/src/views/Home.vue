@@ -69,7 +69,7 @@
   .home {
     float: right;
     height: 100vh;
-    width: 80%;
+    width: 79%;
   }
   .songs {
     overflow-y: scroll; 
