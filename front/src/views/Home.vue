@@ -2,10 +2,13 @@
   <div v-if="category.id" class="home" :key="category.id">
     <div id="title">
       <h1>{{category.name}}</h1>
-      <HR/>
+      <hr />
       <div id="addYourSong">
-        <label>Ajoutez ou modifiez votre choix (lien youtube uniquement, appuyez sur entrée)</label>
-        <br/>
+        <label
+          >Ajoutez ou modifiez votre choix (lien youtube uniquement, appuyez sur
+          entrée)</label
+        >
+        <br />
         <input
           id="input"
           type="text"
@@ -14,15 +17,17 @@
         />
       </div>
     </div>
-    <HR/>
-    <div v-for="song in category.songs" class="song">
-      Added by {{song.name}}
-      <br />
-      <iframe
-        :src="`https://youtube.com/embed/${song.url.substr(song.url.length - 11)}`"
-      >
-      </iframe>
-      <br />
+    <hr />
+    <div class="songs">
+      <div v-for="song in category.songs" class="song">
+        Added by {{song.name}}
+        <br />
+        <iframe
+          :src="`https://youtube.com/embed/${song.url.substr(song.url.length - 11)}`"
+        >
+        </iframe>
+        <br />
+      </div>
     </div>
   </div>
 </template>
@@ -60,10 +65,13 @@
 <style>
   .home {
     float: right;
-    width: 79vw;
+    width: 80%;
+  }
+  .songs {
+    overflow-y: scroll; 
   }
   #title {
-    margin-bottom: 30px; 
+    margin-bottom: 30px;
   }
   iframe {
     width: 80% !important;
