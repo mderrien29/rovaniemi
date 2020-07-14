@@ -32,20 +32,16 @@ export default new Vuex.Store({
       state.status = '';
       state.token = '';
     },
-    loadBattle(state, battle: any) {
-      state.battles[0] = battle;
+    loadBattles(state, battles: any) {
+      console.log(`loadBattles: ${JSON.stringify(battles)}`);
+      state.battles = battles;
     },
     loadCategories(state, {battleId, categories}){
-      const battles = state.battles;
-      battles.find((battle:any) => battle.id == battleId).categories = categories;
-      state.battles = battles;
+      state.battles.find((battle:any) => battle.id == battleId).categories = categories;
     },
     loadSongs(state, {battleId, categoryId, songs}){
-      const battles = state.battles;
-      battles.find((battle:any) => battle.id == battleId)
+      state.battles.find((battle:any) => battle.id == battleId)
         .categories.find( (category: any) => category.id === categoryId).songs = songs;
-      state.battles = battles;
-      console.log(state.battles)
     },
     selectCategory(state, id: number){
       state.selectedCategoryId = id;
@@ -73,7 +69,7 @@ export default new Vuex.Store({
 
       try {
         const battles = await getBattles(this.getters.token);
-        commit('loadBattle', battles[0]); // only the first battle for now
+        commit('loadBattles', battles);
 
         battles.forEach( async (battle: any) => {
           const categories = await getCategories(this.getters.token, battle.id);
@@ -82,7 +78,6 @@ export default new Vuex.Store({
           categories.forEach( async (category: any) => {
             const songs = await getSongs(this.getters.token, category.id);
             commit('loadSongs', {battleId: battle.id, categoryId: category.id, songs });
-
           });
         });
 
@@ -100,7 +95,7 @@ export default new Vuex.Store({
     authStatus: state => state.status,
     username: state => state.username,
     battles: state => state.battles,
-    selectCategory: state => state.selectedCategoryId,
+    selectedCategory: state => state.selectedCategoryId,
   },
   modules: {},
 });

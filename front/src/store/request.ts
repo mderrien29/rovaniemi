@@ -1,6 +1,8 @@
 import * as rp from 'request-promise-native';
 
-const host = 'http://localhost:9001';
+// should be a config option
+const host = `${window.location.protocol}//${window.location.hostname}:9001`;
+console.log(host);
 
 export const getToken = async (username: string, password: string) => {
   const response = await rp.post({
@@ -22,6 +24,8 @@ export const getBattles = async (token: string) => {
     uri: `${host}/me/battle`,
     json: true,
   });
+
+  console.dir(response);
   return response;
 };
 

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="category.id" class="home" :key="category.id">
+  <div v-if="category && category.id" class="home" :key="category.id">
 
     <div id="title">
       <h1>{{category.name}}</h1>
@@ -41,8 +41,8 @@
     name: 'home',
     computed: {
       category: function() {
-        const categoryId = this.$store.getters.selectCategory;
-        if (categoryId !== 0)
+        const categoryId = this.$store.getters.selectedCategory;
+        if (categoryId !== 0 && this.$store.getters.battles && this.$store.getters.battles[0].categories)
           return this.$store.getters.battles[0].categories.find(
             category => category.id == categoryId,
           );
