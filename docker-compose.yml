@@ -16,7 +16,7 @@ services:
     ports: 
       - "9000:80"
     environment:
-      ROVANIEMI_BACKEND: backend:3000
+      ROVANIEMI_BACKEND: localhost:9001
 
   backend:
     restart: always

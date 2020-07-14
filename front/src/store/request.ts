@@ -1,6 +1,6 @@
 import * as rp from 'request-promise-native';
 
-const host = 'http://noel.mderrien.eu:9001';
+const host = 'http://localhost:9001';
 
 export const getToken = async (username: string, password: string) => {
   const response = await rp.post({

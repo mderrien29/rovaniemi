@@ -12,7 +12,7 @@ export class AuthService {
 
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOne(username);
-    console.log(user);
+    console.log(JSON.stringify({...user, password_hash: 'REDACTED'}));
     if (user && user.password_hash === sha512(pass)) {
       const { password, ...result } = user;
       return result;

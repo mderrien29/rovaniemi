@@ -5,10 +5,6 @@ import { DbService } from './db/db.service';
 export class AppService {
   constructor(private readonly dbService: DbService) {}
 
-  getHello(): string {
-    return 'rovaniemi backend';
-  }
-
   async getAll(user, battleId): Promise<any> {
     const results = await this.dbService.query(
       DbService.GET_ALL(user.id, battleId),
@@ -27,17 +23,15 @@ export class AppService {
 
   async getSongs(user, categoryId): Promise<any> {
     let songs = await this.dbService.query(DbService.GET_SONGS(categoryId));
-    console.log(songs)
-
-    songs = this.hideSongs(user, songs);
-    console.log(songs)
+    songs = this.hideSongsFromOtherUsers(user, songs);
+    console.log(songs);
 
     return songs;
   }
 
   async addSongs(user, categoryId, songUrl): Promise<any> {
     await this.dbService.query(
-      DbService.DELETE_SONG(user.id, categoryId)
+      DbService.DELETE_SONG(user.id, categoryId),
     );
 
     return await this.dbService.query(
@@ -45,7 +39,7 @@ export class AppService {
     );
   }
 
-  private hideSongs(user, songs): any[] {
+  private hideSongsFromOtherUsers(user, songs): any[] {
     songs.forEach(song => {
       if (!user.isAdmin && song.userId !== user.id) {
         song.url = '';
