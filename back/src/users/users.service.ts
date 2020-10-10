@@ -13,6 +13,7 @@ export class UsersService {
 
   async findOne(username: string): Promise<User | undefined> {
     const result = await this.dbService.query(DbService.GET_USER(username));
+    console.dir(result);
     return result[0];
   }
 }
