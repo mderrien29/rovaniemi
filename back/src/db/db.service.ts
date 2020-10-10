@@ -1,9 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { createConnection } from 'mysql';
+import { createConnection, Connection } from 'mysql';
 
 @Injectable()
 export class DbService {
-  db: any;
+  db: Connection;
+
+  constructor() {
+    this.db = createConnection({
+      host: process.env.ROVANIEMI_DB_HOST,
+      user: process.env.ROVANIEMI_DB_USER,
+      password: process.env.ROVANIEMI_DB_PASSWORD,
+      database: process.env.ROVANIEMI_DB_NAME,
+    });
+  }
 
   static GET_USER(username: string): string {
     return `SELECT * FROM USER WHERE name='${username}'`;
@@ -33,14 +42,6 @@ export class DbService {
     return `DELETE FROM SONG WHERE EXISTS (SELECT * FROM SONG WHERE userId=${userId} AND categoryId=${categoryId}) AND userId='${userId}' AND categoryId='${categoryId}'`;
   }
 
-  constructor() {
-    this.db = createConnection({
-      host: process.env.ROVANIEMI_DB_HOST,
-      user: process.env.ROVANIEMI_DB_USER,
-      password: process.env.ROVANIEMI_DB_PASSWORD,
-      database: process.env.ROVANIEMI_DB_NAME,
-    });
-  }
 
   query(query: string): Promise<any[]> {
     return new Promise((resolve, reject) => {

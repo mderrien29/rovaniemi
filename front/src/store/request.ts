@@ -1,7 +1,7 @@
 import * as rp from 'request-promise-native';
 
 // should be a config option
-const host = `${window.location.protocol}//${window.location.hostname}:9001`;
+const host = `${window.location.protocol}/${window.location.hostname}:9001`;
 console.log(host);
 
 export const getToken = async (username: string, password: string) => {
