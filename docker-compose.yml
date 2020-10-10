@@ -30,7 +30,7 @@ services:
     ports: 
       - "9001:3000"
     environment:
-      ROVANIEMI_DB_HOST: db:3306
+      ROVANIEMI_DB_HOST: db
       ROVANIEMI_DB_NAME: rovaniemi
       ROVANIEMI_DB_USER: root
       ROVANIEMI_DB_PASSWORD: root
