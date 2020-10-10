@@ -1,8 +1,9 @@
 version: "3.4"
 
 networks:
-  default:
-    driver: bridge
+  inside:
+    internal: true
+  outside:
 
 services: 
   frontend:
@@ -17,6 +18,8 @@ services:
       - "9000:80"
     environment:
       ROVANIEMI_BACKEND: localhost:9001
+    networks:
+      - outside
 
   backend:
     restart: always
@@ -27,13 +30,16 @@ services:
     ports: 
       - "9001:3000"
     environment:
-      ROVANIEMI_DB_HOST: db
+      ROVANIEMI_DB_HOST: db:3306
       ROVANIEMI_DB_NAME: rovaniemi
       ROVANIEMI_DB_USER: root
       ROVANIEMI_DB_PASSWORD: root
       JWT_SECRET: "obsapnTVQoP29JjusZdy"
     links:
       - db
+    networks:
+      - inside
+      - outside
 
   db:
     image: mariadb
@@ -45,3 +51,5 @@ services:
       - "3306:3306"
     volumes:
       - ./db:/docker-entrypoint-initdb.d
+    networks:
+      - inside
