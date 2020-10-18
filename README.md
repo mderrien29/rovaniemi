@@ -2,6 +2,14 @@
 
 > Capitale de la laponie
 
+## Disclamer
+
+This was made very quickly, with no concern with security. 
+* YES passwords hashes are in the db folder.
+* YES NestJS is not properly used (was learning)
+* YES the docker-compose has all env variables in it
+* NO i don't really plan on spending more time on it
+
 ## Project
 
 - `front` : VueJS, typescript
@@ -13,10 +21,6 @@
 ```shell
 docker-compose up -d --build
 ```
-
-## Disclamer
-
-This was made very quickly, with no concern with security. YES passwords hashes are in the db folder.
 
 ## Sound Battles v1
 
@@ -31,7 +35,7 @@ This was made very quickly, with no concern with security. YES passwords hashes 
 
 ## Sound Battles v2 (TODO)
 
-- Sign-in
+- Sign up
 - ADC Battles
 - ADC categories
 - Battle Owner can do his own picks, until he presses a button to do the reveal
