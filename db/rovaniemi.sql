@@ -57,12 +57,11 @@ CREATE TABLE `CATEGORY` (
 --
 
 INSERT INTO `CATEGORY` (`id`, `battleId`, `name`) VALUES
-(1, 1, 'La chanson qu\'on écoute en boucle en ce moment'),
-(2, 1, 'La chanson pour dancer'),
-(3, 1, 'La chanson qu\'on écoute en secret'),
-(4, 1, 'La plus belle des chansons'),
-(5, 1, 'La chanson qu\'on souhaite d\'écouter à son pire ennemi'),
-(6, 1, 'La découverte de l\'année');
+(1, 1, 'La musique pour faire le ménage'),
+(2, 1, 'La musique parfaite pour conduire'),
+(3, 1, 'La reprise la plus nulle (pour une bonne chanson)'),
+(4, 1, 'La musique la plus triste'),
+(5, 1, 'Le coup de coeur de l\'année');
 
 -- --------------------------------------------------------
 
@@ -95,12 +94,12 @@ CREATE TABLE `USER` (
 --
 
 INSERT INTO `USER` (`id`, `admin`, `name`, `password_hash`) VALUES
-(1, 1, 'Admin', '18e8cf03be682008032d9adb502ea590906c088ec5ae69ca0f2028b8844c65758492dfd2937344dde2f419f193ace88895012b3fb05bc2c941189fa02200cc5f'),
-(2, 0, 'Martial', '15efeadb168827003da1bfe1befbc2d816215b2402b32afba96b99b6696f3de69f9e0caa98622a77e74eef40c6a6fa125493bbd3a20b8e11324dfc0d507c028d'),
-(3, 0, 'Elise', '06e07ba98d30da98f9a7ad8243781d687f913b7cd8c2afcd6dbfa0abcd34fb0d62660bc2d2d3ed580d0d93caaec31441102f20403a684fc02447284eeb54ac40'),
-(4, 0, 'Nell', '14c8319b25b882dfc7c0e16f72c4677374950512945a886b48ace5c1e5b28019a8208bc0f450c56ba2a6d83db18cedafa20e06557bebf5dc1899d48738f4cb2b'),
-(5, 0, 'Ronan', 'e7f1a03baa8a0fbfe26c1ad14e0b1eeeafefbe3bd1184eea0a010481afb17b70334056d51ab419e3ec620fc92d114a1deab1e7b708f5480ef6d0f11abb3254c0'),
-(6, 0, 'Romain', 'ea8c5d21da107d52bb0fae4c5a94691cbfb7df16d5c9b3a82d06e627c161dc96f49084a68f178c5f6167cba65093f5ce5c545132bb0124924427bf083a6555b4');
+(1, 1, 'Admin', '09a5eddc221468a7fe0af1b1bf33056f67cfb7887ff0898d5f05daadba74b67e8e1c469cef54f48f5858cf55ee03f5019e74aad9eafd12cd9c3ded18059c074a'),
+(2, 0, 'Martial', '21b871409ddecf777e047986f87e2b191070226c7a59e09213d824410358ca91028deccc8417dc854c7f136b1f11f96bffea32d09f9cb87f4a42e8971516861f'),
+(3, 0, 'Elise', '21b871409ddecf777e047986f87e2b191070226c7a59e09213d824410358ca91028deccc8417dc854c7f136b1f11f96bffea32d09f9cb87f4a42e8971516861f'),
+(4, 0, 'Nell', '21b871409ddecf777e047986f87e2b191070226c7a59e09213d824410358ca91028deccc8417dc854c7f136b1f11f96bffea32d09f9cb87f4a42e8971516861f'),
+(5, 0, 'Ronan', '21b871409ddecf777e047986f87e2b191070226c7a59e09213d824410358ca91028deccc8417dc854c7f136b1f11f96bffea32d09f9cb87f4a42e8971516861f'),
+(6, 0, 'Romain', '21b871409ddecf777e047986f87e2b191070226c7a59e09213d824410358ca91028deccc8417dc854c7f136b1f11f96bffea32d09f9cb87f4a42e8971516861f');
 
 -- --------------------------------------------------------
 
